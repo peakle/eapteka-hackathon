@@ -1,29 +1,39 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import {
+    Panel,
+    PanelHeader,
+    Header,
+    Button,
+    Group,
+    Cell,
+    Div,
+    Avatar,
+    IconButton,
+    WriteBarIcon,
+    Search, WriteBar
+} from '@vkontakte/vkui';
+import {Icon28Search, Icon28SmileOutline, Icon28VoiceOutline} from "@vkontakte/icons";
 
-const Home = ({ id, go, fetchedUser }) => (
-	<Panel id={id}>
-		<PanelHeader>Example</PanelHeader>
-		{fetchedUser &&
-		<Group header={<Header mode="secondary">User Data Fetched with VK Bridge</Header>}>
-			<Cell
-				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
-				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
-			>
-				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
-			</Cell>
-		</Group>}
-
-		<Group header={<Header mode="secondary">Navigation Example</Header>}>
-			<Div>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="persik">
-					Show me the Persik, please
-				</Button>
-			</Div>
-		</Group>
-	</Panel>
+const Home = ({id, go, fetchedUser}) => (
+    <Panel id="writebar">
+        <Group>
+            <WriteBar
+                after={
+                    <Fragment>
+                        <WriteBarIcon>
+                            <Icon28VoiceOutline />
+                        </WriteBarIcon>
+                        <WriteBarIcon>
+                            <Icon28Search />
+                        </WriteBarIcon>
+                    </Fragment>
+                }
+                placeholder="Поиск"
+            />
+        </Group>
+    </Panel>
 );
 
 Home.propTypes = {
