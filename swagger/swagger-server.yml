@@ -1,0 +1,56 @@
+swagger: '2.0'
+info:
+  title: Eapteka
+  description: Eapteka api specification
+  version: 1.0.0
+host: localhost
+schemes:
+  - http
+basePath: /v1
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /text/recognize:
+    post:
+      summary: send text get answer from ai bot
+      operationId: TextRecognize
+      parameters:
+        - $ref: '#/parameters/TextRecognizeParam'
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/RecognizeResponse'
+
+definitions:
+  RecognizeResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        enum:
+          - success
+          - failure
+      text:
+        type: string
+        description: response from bot
+      uri:
+        type: string
+        description: uri to audio file with speech
+
+parameters:
+  TextRecognizeParam:
+    name: body
+    in: body
+    schema:
+      type: object
+      required:
+        - text
+        - userID
+      properties:
+        text:
+          type: string
+        userID:
+          type: string

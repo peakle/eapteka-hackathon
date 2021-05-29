@@ -1,0 +1,89 @@
+swagger: '2.0'
+info:
+  title: Eapteka
+  description: Eapteka external api specification
+  version: 1.0.0
+host: api.aimybox.com
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /request:
+    post:
+      summary: aimybox api text route
+      operationId: BotTextRequest
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            required:
+              - query
+              - key
+              - unit
+            properties:
+              query:
+                type: string
+                description: user text
+              key:
+                type: string
+                description: amibox api key
+              unit:
+                type: string
+                description: skill id
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/BotResponse'
+
+definitions:
+  BotResponse:
+    type: object
+    properties:
+      query:
+        type: string
+        example: "сколько стоит iphone"
+      text:
+        type: string
+        description: bot response text from scenario
+        example: "iphone есть в наличии по цене 20000 руб. Хотите заказать?"
+      action:
+        type: string
+      intent:
+        type: string
+        example: "/Webhook/eapteka"
+      question:
+        type: boolean
+      data:
+        type: object
+        properties:
+          newSessionStarted:
+            type: boolean
+      replies:
+        type: array
+        items:
+          $ref: '#/definitions/Replie'
+
+  Replie:
+    type: object
+    required:
+      - type
+    properties:
+      type:
+        type: string
+        enum:
+          - buttons
+          - text
+      buttons:
+        type: array
+        items:
+          required:
+            - text
+          type: object
+          properties:
+            text:
+              type: string

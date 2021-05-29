@@ -36,7 +36,7 @@ test-short:
 
 release: build deploy
 
-build:
+build: generate
 	@echo "build ..."
 	@ CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} \
 		go build -o ./$(PROJECT) cmd/main.go
@@ -46,3 +46,15 @@ deploy:
 	@echo "deploy..."
 	@rsync -ve ssh --progress ./$(PROJECT) $(USERNAME)@$(HOSTNAME):$(REMOTE_PROJECT_DIR)
 	@ssh ${USERNAME}@${HOSTNAME} 'supervisorctl restart eapteka:'
+
+generate: generate-client generate-server
+
+generate-server:
+	@rm -rf ./generated/server
+	@mkdir -p ./generated/server
+	@swagger generate client -f ./swagger/swagger-server.yml -t ./generated/server --template-dir ./templates ## todo change to server
+
+generate-client:
+	@rm -rf ./generated/client
+	@mkdir -p ./generated/client
+	@swagger generate client -f ./swagger/external/swagger-*.yml -t ./generated/client --template-dir ./templates ## todo change to server
