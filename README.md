@@ -1,5 +1,3 @@
-# Eapteka
-
 ## API Doc:
 
 ### [POST] `/v1/speech/recognize` - recognize ogg data and return audio/text response
