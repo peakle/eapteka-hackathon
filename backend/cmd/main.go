@@ -8,7 +8,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/peakle/eapteka-miniapp/internal/server"
+	"github.com/peakle/eapteka-miniapp/backend/internal/server"
 )
 
 type Process interface {
