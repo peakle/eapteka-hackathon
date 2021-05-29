@@ -8,6 +8,8 @@ import (
 
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/pprofhandler"
+
+	"github.com/peakle/eapteka-miniapp/internal"
 )
 
 type Handler struct {

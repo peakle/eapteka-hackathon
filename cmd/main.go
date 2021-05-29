@@ -8,7 +8,6 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/peakle/eapteka-miniapp/backend/internal/server"
 )
 
 type Process interface {
@@ -28,10 +27,8 @@ func main() {
 		cancel()
 	}()
 
-	container := provider.NewContainer()
 	ps := Processors{
-		consumer.NewConsumer(container),
-		server.NewHandler(container),
+		server.NewHandler(),
 	}
 
 	for _, p := range ps {
