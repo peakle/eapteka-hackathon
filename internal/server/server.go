@@ -29,6 +29,9 @@ func (handler *Handler) Start(ctx context.Context) error {
 
 		if strings.HasPrefix(path, "/v1/speech/state") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
 			handler.SpeechState(ctx)
+		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/create") && string(ctx.Request.Header.Method()) == fasthttp.MethodPut {
+		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/add") && string(ctx.Request.Header.Method()) == fasthttp.MethodPatch {
+		} else if strings.HasPrefix(path, "/v1/speech/callback/drugs/create") && string(ctx.Request.Header.Method()) == fasthttp.MethodPut {
 		} else if strings.HasPrefix(path, "/debug/pprof") {
 			pprofhandler.PprofHandler(ctx)
 		} else {
