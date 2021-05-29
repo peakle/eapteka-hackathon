@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/pprofhandler"
 
@@ -29,7 +30,6 @@ func NewHandler() *Handler {
 		manager: internal.InitManager(),
 		config: &Config{
 			ApiKey: "jgSAiwzYGRgVX2ei5eU03W9QIKSmNlab",
-			Unit:   "1622285618631",
 		},
 	}
 }
@@ -93,12 +93,17 @@ func (h *Handler) TextRecognize(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
+	if err = params.Validate(strfmt.Default); err != nil {
+		fail(err)
+		return
+	}
+
 	b := operations.BotTextRequestParams{
 		Context: ctx,
 		Body: operations.BotTextRequestBody{
 			Key:   &h.config.ApiKey,
 			Query: params.Text,
-			Unit:  &h.config.Unit,
+			Unit:  params.UserID,
 		},
 	}
 
