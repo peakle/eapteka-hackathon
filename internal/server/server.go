@@ -27,8 +27,10 @@ func (handler *Handler) Start(ctx context.Context) error {
 	var requestHandler = func(ctx *fasthttp.RequestCtx) {
 		path := strings.ToLower(string(ctx.Path()))
 
-		if strings.HasPrefix(path, "/v1/speech/state") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
-			handler.SpeechState(ctx)
+		if strings.HasPrefix(path, "/v1/speech/recognize") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
+			handler.SpeechRecognize(ctx)
+		} else if strings.HasPrefix(path, "/v1/text/recognize") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
+			handler.TextRecognize(ctx)
 		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/create") && string(ctx.Request.Header.Method()) == fasthttp.MethodPut {
 		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/add") && string(ctx.Request.Header.Method()) == fasthttp.MethodPatch {
 		} else if strings.HasPrefix(path, "/v1/speech/callback/drugs/create") && string(ctx.Request.Header.Method()) == fasthttp.MethodPut {
@@ -58,7 +60,11 @@ func (handler *Handler) Start(ctx context.Context) error {
 	return server.Shutdown()
 }
 
-func (*Handler) SpeechState(ctx *fasthttp.RequestCtx) {
+func (*Handler) SpeechRecognize(ctx *fasthttp.RequestCtx) {
+	// TODO
+}
+
+func (*Handler) TextRecognize(ctx *fasthttp.RequestCtx) {
 	// TODO
 }
 
