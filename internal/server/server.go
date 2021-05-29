@@ -12,11 +12,11 @@ import (
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/pprofhandler"
 
-	"github.com/peakle/eapteka-miniapp/generated/client/client"
-	"github.com/peakle/eapteka-miniapp/generated/client/client/operations"
-	serverApi "github.com/peakle/eapteka-miniapp/generated/server/client/operations"
-	serverModels "github.com/peakle/eapteka-miniapp/generated/server/models"
-	"github.com/peakle/eapteka-miniapp/internal"
+	"github.com/peakle/miniapp/generated/client/client"
+	"github.com/peakle/miniapp/generated/client/client/operations"
+	serverApi "github.com/peakle/miniapp/generated/server/client/operations"
+	serverModels "github.com/peakle/miniapp/generated/server/models"
+	"github.com/peakle/miniapp/internal"
 )
 
 type Handler struct {
