@@ -12,17 +12,34 @@ import {
     Avatar,
     IconButton,
     WriteBarIcon,
-    Search, WriteBar
+    Search, WriteBar, Title
 } from '@vkontakte/vkui';
 import {Icon28Search, Icon28SmileOutline, Icon28VoiceOutline} from "@vkontakte/icons";
 
-const Home = ({id, go, fetchedUser}) => (
-    <Panel id="writebar">
+const Home = ({id, go, fetchedUser}) => {
+
+    const startRecording = () => {
+        fetch('/v1/speech/state', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'audio/ogg'
+              },
+            body: ''
+        })
+        .then((response) => console.log(response.url))
+        .catch((e) => console.log(e));
+    };
+
+    return (
+    <Panel id="writebar" centered>
+        <Title level="1" weight="bold" style={{ padding: "20px 20px 60px", textAlign: "center" }}>
+            Назовите лекарство
+        </Title>
         <Group>
-            <WriteBar
+            {/* <WriteBar
                 after={
                     <Fragment>
-                        <WriteBarIcon>
+                        <WriteBarIcon onClick={() => startRecording()}>
                             <Icon28VoiceOutline />
                         </WriteBarIcon>
                         <WriteBarIcon>
@@ -31,10 +48,17 @@ const Home = ({id, go, fetchedUser}) => (
                     </Fragment>
                 }
                 placeholder="Поиск"
-            />
+            /> */}
+        <IconButton onClick={() => startRecording()}>
+            <Icon28VoiceOutline />
+        </IconButton>
         </Group>
+        <Button style={{ marginTop: "80px" }} mode="outline" size="l">
+            Аптечка
+        </Button>
     </Panel>
-);
+)
+};
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
