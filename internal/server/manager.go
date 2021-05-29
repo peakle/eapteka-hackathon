@@ -46,11 +46,7 @@ func lastSchedule(m *internal.SQLManager, userID, drug string) (string, error) {
 
 	rows, err = stmt.Query(userID, drug)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return "", nil
-		}
-
-		return "", fmt.Errorf("on lastSchedule: %s", err)
+		return never, fmt.Errorf("on lastSchedule: %s", err)
 	}
 	defer rows.Close()
 
@@ -66,10 +62,10 @@ func lastSchedule(m *internal.SQLManager, userID, drug string) (string, error) {
 			}
 			return "", fmt.Errorf("on lastSchedule: %s", err)
 		}
+	}
 
-		if date == "" {
-			return never, nil
-		}
+	if date == "" {
+		return never, nil
 	}
 
 	return date, nil
