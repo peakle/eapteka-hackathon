@@ -61,3 +61,15 @@ func (handler *Handler) Start(ctx context.Context) error {
 func (*Handler) SpeechState(ctx *fasthttp.RequestCtx) {
 	// TODO
 }
+
+func (*Handler) CallbackScheduleCreate(ctx *fasthttp.RequestCtx) {
+	// TODO
+}
+
+func (*Handler) CallbackScheduleAdd(ctx *fasthttp.RequestCtx) {
+	// TODO
+}
+
+func (*Handler) CallbackDrugsCreate(ctx *fasthttp.RequestCtx) {
+	// TODO
+}
