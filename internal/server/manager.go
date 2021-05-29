@@ -13,7 +13,7 @@ func addSchedule(m *internal.SQLManager, userID, drug string) error {
 	ins := &sg.InsertData{
 		TableName: "Schedule",
 		IsIgnore:  true,
-		Fields:    []string{"userID", "drug", "date", "createAt", "updatedAt"},
+		Fields:    []string{"userID", "drug", "date", "createdAt", "updatedAt"},
 	}
 
 	date := time.Now().Format("2006-01-02 15:04:05")
