@@ -16,12 +16,19 @@ type Handler struct {
 	manager *internal.SQLManager
 }
 
+func NewHandler() *Handler {
+	return &Handler{
+		manager: internal.InitManager(),
+	}
+}
+
 func (handler *Handler) Start(ctx context.Context) error {
 
 	var requestHandler = func(ctx *fasthttp.RequestCtx) {
 		path := strings.ToLower(string(ctx.Path()))
 
 		if strings.HasPrefix(path, "/v1/speech/state") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
+			handler.SpeechState(ctx)
 		} else if strings.HasPrefix(path, "/debug/pprof") {
 			pprofhandler.PprofHandler(ctx)
 		} else {
@@ -46,4 +53,8 @@ func (handler *Handler) Start(ctx context.Context) error {
 	<-ctx.Done()
 
 	return server.Shutdown()
+}
+
+func (*Handler) SpeechState(ctx *fasthttp.RequestCtx) {
+	// TODO
 }

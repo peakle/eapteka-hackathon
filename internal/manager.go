@@ -18,13 +18,6 @@ type config struct {
 	DBName   string
 }
 
-type VideoStatus struct {
-	Id       string  `json:"id,omitempty"`
-	Link     *string `json:"link,omitempty"`
-	FileLink *string `json:"file_link,omitempty"`
-	Status   string  `json:"status,omitempty"`
-}
-
 // SQLManager - manage connect to db
 type SQLManager struct {
 	conn *sql.DB
