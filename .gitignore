@@ -2,3 +2,4 @@
 docker/.data
 .env
 generated/*
+eapteka

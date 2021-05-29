@@ -45,7 +45,7 @@ build: generate
 deploy:
 	@echo "deploy..."
 	@rsync -ve ssh --progress ./$(PROJECT) $(USERNAME)@$(HOSTNAME):$(REMOTE_PROJECT_DIR)
-	@ssh ${USERNAME}@${HOSTNAME} 'supervisorctl restart eapteka:'
+	@ssh ${USERNAME}@${HOSTNAME} 'supervisorctl restart eapteka'
 
 generate: generate-client generate-server
 
