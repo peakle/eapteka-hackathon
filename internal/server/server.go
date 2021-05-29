@@ -148,7 +148,7 @@ func (h *Handler) LastSchedule(ctx *fasthttp.RequestCtx) {
 }
 
 func (h *Handler) CallbackScheduleAdd(ctx *fasthttp.RequestCtx) {
-	const handler = "LastSchedule"
+	const handler = "CallbackScheduleAdd"
 	defer ctx.Response.Header.Set("Content-Type", "application/json")
 
 	fail := func(err error) {
