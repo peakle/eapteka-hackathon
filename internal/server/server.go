@@ -44,8 +44,10 @@ func (h *Handler) Start(ctx context.Context) error {
 			h.SpeechRecognize(ctx)
 		} else if strings.HasPrefix(path, "/v1/text/recognize") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
 			h.TextRecognize(ctx)
-		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/create") && string(ctx.Request.Header.Method()) == fasthttp.MethodPut {
-		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/add") && string(ctx.Request.Header.Method()) == fasthttp.MethodPatch {
+		} else if strings.HasPrefix(path, "/v1/speech/schedule") && string(ctx.Request.Header.Method()) == fasthttp.MethodGet {
+			h.LastSchedule(ctx)
+		} else if strings.HasPrefix(path, "/v1/speech/callback/schedule/add") && string(ctx.Request.Header.Method()) == fasthttp.MethodPost {
+			h.CallbackScheduleAdd(ctx)
 		} else if strings.HasPrefix(path, "/v1/speech/callback/drugs/create") && string(ctx.Request.Header.Method()) == fasthttp.MethodPut {
 		} else if strings.HasPrefix(path, "/debug/pprof") {
 			pprofhandler.PprofHandler(ctx)
@@ -71,10 +73,6 @@ func (h *Handler) Start(ctx context.Context) error {
 	<-ctx.Done()
 
 	return server.Shutdown()
-}
-
-func (*Handler) SpeechRecognize(ctx *fasthttp.RequestCtx) {
-	// TODO
 }
 
 func (h *Handler) TextRecognize(ctx *fasthttp.RequestCtx) {
@@ -122,12 +120,49 @@ func (h *Handler) TextRecognize(ctx *fasthttp.RequestCtx) {
 	_, _ = fmt.Fprint(ctx, string(res))
 }
 
-func (*Handler) CallbackScheduleCreate(ctx *fasthttp.RequestCtx) {
-	// TODO
+func (*Handler) SpeechRecognize(ctx *fasthttp.RequestCtx) {
+	// TODO make on front
 }
 
-func (*Handler) CallbackScheduleAdd(ctx *fasthttp.RequestCtx) {
-	// TODO
+func (h *Handler) LastSchedule(ctx *fasthttp.RequestCtx) {
+	const handler = "LastSchedule"
+	defer ctx.Response.Header.Set("Content-Type", "application/json")
+
+	fail := func(err error) {
+		log.Printf("[%s]: %s \n", handler, err)
+		_, _ = fmt.Fprint(ctx, "{\"status\": \"failure\"}")
+	}
+
+	userID := string(ctx.QueryArgs().Peek("userID"))
+	drugName := string(ctx.QueryArgs().Peek("drug"))
+
+	var err error
+	var lastTake string
+
+	if lastTake, err = lastSchedule(h.manager, userID, drugName); err != nil {
+		fail(err)
+		return
+	}
+
+	_, _ = fmt.Fprintf(ctx, "{\"date\": \"%s\"}", lastTake)
+}
+
+func (h *Handler) CallbackScheduleAdd(ctx *fasthttp.RequestCtx) {
+	const handler = "LastSchedule"
+	defer ctx.Response.Header.Set("Content-Type", "application/json")
+
+	fail := func(err error) {
+		log.Printf("[%s]: %s \n", handler, err)
+		_, _ = fmt.Fprint(ctx, "{\"status\": \"failure\"}")
+	}
+
+	userID := string(ctx.QueryArgs().Peek("userID"))
+	drugName := string(ctx.QueryArgs().Peek("drug"))
+
+	if err := addSchedule(h.manager, userID, drugName); err != nil {
+		fail(err)
+		return
+	}
 }
 
 func (*Handler) CallbackDrugsCreate(ctx *fasthttp.RequestCtx) {
