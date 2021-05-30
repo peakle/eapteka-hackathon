@@ -1,4 +1,4 @@
-module github.com/peakle/miniapp
+module github.com/peakle/eapteka-hackathon
 
 go 1.14
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/peakle/miniapp/internal"
+	"github.com/peakle/eapteka-hackathon/internal"
 	sg "github.com/wakeapp/go-sql-generator"
 )
 
